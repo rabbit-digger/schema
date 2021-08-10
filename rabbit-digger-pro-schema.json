@@ -266,6 +266,12 @@
               "type"
             ],
             "properties": {
+              "lru_cache_size": {
+                "default": 128,
+                "type": "integer",
+                "format": "uint",
+                "minimum": 0.0
+              },
               "rule": {
                 "type": "array",
                 "items": {
