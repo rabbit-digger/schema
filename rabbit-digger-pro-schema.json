@@ -80,6 +80,15 @@
               "type"
             ],
             "properties": {
+              "mark": {
+                "description": "set SO_MARK on linux",
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "format": "uint32",
+                "minimum": 0.0
+              },
               "nodelay": {
                 "description": "set nodelay",
                 "default": null,
@@ -654,6 +663,40 @@
               "type": {
                 "type": "string",
                 "const": "socks5"
+              }
+            }
+          },
+          {
+            "title": "TProxyServerConfig",
+            "type": "object",
+            "required": [
+              "bind",
+              "type"
+            ],
+            "properties": {
+              "bind": {
+                "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
+                "type": "string"
+              },
+              "listen": {
+                "title": "NetRef",
+                "type": "string"
+              },
+              "mark": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "format": "uint32",
+                "minimum": 0.0
+              },
+              "net": {
+                "title": "NetRef",
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "const": "tproxy"
               }
             }
           }
