@@ -101,6 +101,15 @@
               "type"
             ],
             "properties": {
+              "connect_timeout": {
+                "description": "timeout of TCP connect, in seconds.",
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "format": "uint64",
+                "minimum": 0.0
+              },
               "mark": {
                 "description": "set SO_MARK on linux",
                 "type": [
