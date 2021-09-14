@@ -18,7 +18,7 @@
             ],
             "properties": {
               "net": {
-                "type": "string"
+                "$ref": "#/definitions/net_alias_NetRef"
               },
               "type": {
                 "type": "string",
@@ -38,20 +38,20 @@
             ],
             "properties": {
               "lookup_host": {
-                "type": "string"
+                "$ref": "#/definitions/net_combine_NetRef"
               },
               "tcp_bind": {
-                "type": "string"
+                "$ref": "#/definitions/net_combine_NetRef"
               },
               "tcp_connect": {
-                "type": "string"
+                "$ref": "#/definitions/net_combine_NetRef"
               },
               "type": {
                 "type": "string",
                 "const": "combine"
               },
               "udp_bind": {
-                "type": "string"
+                "$ref": "#/definitions/net_combine_NetRef"
               }
             }
           },
@@ -64,7 +64,11 @@
             "properties": {
               "net": {
                 "default": "local",
-                "type": "string"
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/net_dns_NetRef"
+                  }
+                ]
               },
               "type": {
                 "type": "string",
@@ -82,7 +86,11 @@
             "properties": {
               "net": {
                 "default": "local",
-                "type": "string"
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/net_http_NetRef"
+                  }
+                ]
               },
               "server": {
                 "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
@@ -199,7 +207,11 @@
             "properties": {
               "net": {
                 "default": "local",
-                "type": "string"
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/net_obfs_NetRef"
+                  }
+                ]
               },
               "type": {
                 "type": "string",
@@ -257,7 +269,11 @@
             "properties": {
               "net": {
                 "default": "local",
-                "type": "string"
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/net_remote_NetRef"
+                  }
+                ]
               },
               "token": {
                 "type": "string"
@@ -290,10 +306,10 @@
                 "type": "boolean"
               },
               "net": {
-                "type": "string"
+                "$ref": "#/definitions/net_resolve_NetRef"
               },
               "resolve_net": {
-                "type": "string"
+                "$ref": "#/definitions/net_resolve_NetRef"
               },
               "type": {
                 "type": "string",
@@ -339,7 +355,7 @@
               "list": {
                 "type": "array",
                 "items": {
-                  "type": "string"
+                  "$ref": "#/definitions/net_select_NetRef"
                 }
               },
               "selected": {
@@ -368,7 +384,11 @@
               },
               "net": {
                 "default": "local",
-                "type": "string"
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/net_shadowsocks_NetRef"
+                  }
+                ]
               },
               "password": {
                 "type": "string"
@@ -397,7 +417,11 @@
             "properties": {
               "net": {
                 "default": "local",
-                "type": "string"
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/net_socks5_NetRef"
+                  }
+                ]
               },
               "server": {
                 "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
@@ -421,7 +445,11 @@
             "properties": {
               "net": {
                 "default": "local",
-                "type": "string"
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/net_trojan_NetRef"
+                  }
+                ]
               },
               "password": {
                 "description": "password in plain text",
@@ -739,6 +767,27 @@
     }
   },
   "definitions": {
+    "net_alias_NetRef": {
+      "type": "string"
+    },
+    "net_combine_NetRef": {
+      "type": "string"
+    },
+    "net_dns_NetRef": {
+      "type": "string"
+    },
+    "net_http_NetRef": {
+      "type": "string"
+    },
+    "net_obfs_NetRef": {
+      "type": "string"
+    },
+    "net_remote_NetRef": {
+      "type": "string"
+    },
+    "net_resolve_NetRef": {
+      "type": "string"
+    },
     "net_rule_DomainMatcherMethod": {
       "type": "string",
       "enum": [
@@ -748,6 +797,9 @@
       ]
     },
     "net_rule_IpCidr": {
+      "type": "string"
+    },
+    "net_rule_NetRef": {
       "type": "string"
     },
     "net_rule_RuleItem": {
@@ -831,9 +883,12 @@
       ],
       "properties": {
         "target": {
-          "type": "string"
+          "$ref": "#/definitions/net_rule_NetRef"
         }
       }
+    },
+    "net_select_NetRef": {
+      "type": "string"
     },
     "net_shadowsocks_Cipher": {
       "type": "string",
@@ -884,6 +939,15 @@
         "sm4-gcm",
         "sm4-ccm"
       ]
+    },
+    "net_shadowsocks_NetRef": {
+      "type": "string"
+    },
+    "net_socks5_NetRef": {
+      "type": "string"
+    },
+    "net_trojan_NetRef": {
+      "type": "string"
     },
     "server_shadowsocks_Cipher": {
       "type": "string",
