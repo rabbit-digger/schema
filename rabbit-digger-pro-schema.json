@@ -355,11 +355,11 @@
               "list": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/net_select_NetRef"
+                  "type": "string"
                 }
               },
               "selected": {
-                "type": "string"
+                "$ref": "#/definitions/net_select_NetRef"
               },
               "type": {
                 "type": "string",
