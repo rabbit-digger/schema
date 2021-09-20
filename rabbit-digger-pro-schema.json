@@ -359,9 +359,7 @@
                 }
               },
               "selected": {
-                "type": "integer",
-                "format": "uint",
-                "minimum": 0.0
+                "type": "string"
               },
               "type": {
                 "type": "string",
