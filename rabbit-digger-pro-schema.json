@@ -118,6 +118,13 @@
                 "format": "uint64",
                 "minimum": 0.0
               },
+              "device": {
+                "description": "bind to device",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
               "mark": {
                 "description": "set SO_MARK on linux",
                 "type": [
