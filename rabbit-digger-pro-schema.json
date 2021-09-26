@@ -174,7 +174,7 @@
           {
             "title": "ObfsNetConfig",
             "type": "object",
-            "anyOf": [
+            "oneOf": [
               {
                 "type": "object",
                 "required": [
@@ -229,7 +229,7 @@
           {
             "title": "RemoteNetConfig",
             "type": "object",
-            "anyOf": [
+            "oneOf": [
               {
                 "type": "object",
                 "required": [
@@ -603,7 +603,7 @@
           {
             "title": "RemoteProtocolConfig",
             "type": "object",
-            "anyOf": [
+            "oneOf": [
               {
                 "type": "object",
                 "required": [
@@ -809,7 +809,7 @@
     },
     "net_rule_RuleItem": {
       "type": "object",
-      "anyOf": [
+      "oneOf": [
         {
           "type": "object",
           "required": [
