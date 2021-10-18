@@ -109,6 +109,21 @@
               "type"
             ],
             "properties": {
+              "bind_addr": {
+                "description": "bind to address",
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "ip"
+              },
+              "bind_device": {
+                "description": "bind to device",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
               "connect_timeout": {
                 "description": "timeout of TCP connect, in seconds.",
                 "type": [
@@ -117,13 +132,6 @@
                 ],
                 "format": "uint64",
                 "minimum": 0.0
-              },
-              "device": {
-                "description": "bind to device",
-                "type": [
-                  "string",
-                  "null"
-                ]
               },
               "mark": {
                 "description": "set SO_MARK on linux",
@@ -481,6 +489,18 @@
                 "description": "enable udp or not",
                 "default": false,
                 "type": "boolean"
+              },
+              "websocket": {
+                "description": "enabled websocket support",
+                "default": null,
+                "anyOf": [
+                  {
+                    "$ref": "#/definitions/net_trojan_WebSocket"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               }
             }
           }
@@ -953,6 +973,21 @@
     },
     "net_trojan_NetRef": {
       "type": "string"
+    },
+    "net_trojan_WebSocket": {
+      "type": "object",
+      "required": [
+        "host",
+        "path"
+      ],
+      "properties": {
+        "host": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        }
+      }
     },
     "server_shadowsocks_Cipher": {
       "type": "string",
