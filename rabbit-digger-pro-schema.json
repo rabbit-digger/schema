@@ -11,6 +11,7 @@
         "anyOf": [
           {
             "title": "AliasNetConfig",
+            "description": "A net refering to another net.",
             "type": "object",
             "required": [
               "net",
@@ -28,6 +29,7 @@
           },
           {
             "title": "CombineNetConfig",
+            "description": "CombineNet merges multiple nets into one.",
             "type": "object",
             "required": [
               "lookup_host",
@@ -104,6 +106,7 @@
           },
           {
             "title": "LocalNetConfig",
+            "description": "A local network.",
             "type": "object",
             "required": [
               "type"
@@ -143,7 +146,7 @@
                 "minimum": 0.0
               },
               "nodelay": {
-                "description": "set nodelay",
+                "description": "set nodelay. default is true",
                 "default": null,
                 "type": [
                   "boolean",
@@ -512,7 +515,8 @@
         "type": "object",
         "anyOf": [
           {
-            "title": "ForwardNetConfig",
+            "title": "ForwardServerConfig",
+            "description": "A server that forwards all connections to target.",
             "type": "object",
             "required": [
               "bind",
