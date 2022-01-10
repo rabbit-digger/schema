@@ -68,13 +68,13 @@
                 "default": "local",
                 "allOf": [
                   {
-                    "$ref": "#/definitions/net_dns_NetRef"
+                    "$ref": "#/definitions/net_dns_sniffer_NetRef"
                   }
                 ]
               },
               "type": {
                 "type": "string",
-                "const": "dns"
+                "const": "dns_sniffer"
               }
             }
           },
@@ -802,7 +802,7 @@
     "net_combine_NetRef": {
       "type": "string"
     },
-    "net_dns_NetRef": {
+    "net_dns_sniffer_NetRef": {
       "type": "string"
     },
     "net_http_NetRef": {
