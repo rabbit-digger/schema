@@ -515,6 +515,33 @@
         "type": "object",
         "anyOf": [
           {
+            "title": "EchoServerConfig",
+            "description": "A echo server.",
+            "type": "object",
+            "required": [
+              "bind",
+              "type"
+            ],
+            "properties": {
+              "bind": {
+                "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
+                "type": "string"
+              },
+              "listen": {
+                "title": "NetRef",
+                "type": "string"
+              },
+              "net": {
+                "title": "NetRef",
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "const": "echo"
+              }
+            }
+          },
+          {
             "title": "ForwardServerConfig",
             "description": "A server that forwards all connections to target.",
             "type": "object",
