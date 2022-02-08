@@ -166,6 +166,15 @@
               "type": {
                 "type": "string",
                 "const": "local"
+              },
+              "udp_domain_cache_size": {
+                "description": "cache size of domain cache per UDP socket. default is 16 if set to 0, disable domain cache",
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "format": "uint",
+                "minimum": 0.0
               }
             }
           },
