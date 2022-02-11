@@ -570,6 +570,10 @@
               "type": {
                 "type": "string",
                 "const": "forward"
+              },
+              "udp": {
+                "default": false,
+                "type": "boolean"
               }
             }
           },
