@@ -238,75 +238,6 @@
             }
           },
           {
-            "title": "RemoteNetConfig",
-            "type": "object",
-            "oneOf": [
-              {
-                "type": "object",
-                "required": [
-                  "mode",
-                  "remote"
-                ],
-                "properties": {
-                  "mode": {
-                    "type": "string",
-                    "enum": [
-                      "active"
-                    ]
-                  },
-                  "remote": {
-                    "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
-                    "type": "string"
-                  }
-                }
-              },
-              {
-                "type": "object",
-                "required": [
-                  "bind",
-                  "mode"
-                ],
-                "properties": {
-                  "bind": {
-                    "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
-                    "type": "string"
-                  },
-                  "mode": {
-                    "type": "string",
-                    "enum": [
-                      "passive"
-                    ]
-                  }
-                }
-              }
-            ],
-            "required": [
-              "token",
-              "type"
-            ],
-            "properties": {
-              "net": {
-                "default": "local",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/net_remote_NetRef"
-                  }
-                ]
-              },
-              "token": {
-                "type": "string"
-              },
-              "type": {
-                "type": "string",
-                "const": "remote"
-              },
-              "udp_in_tcp": {
-                "default": false,
-                "type": "boolean"
-              }
-            }
-          },
-          {
             "title": "ResolveConfig",
             "type": "object",
             "required": [
@@ -332,6 +263,32 @@
               "type": {
                 "type": "string",
                 "const": "resolve"
+              }
+            }
+          },
+          {
+            "title": "RpcNetConfig",
+            "type": "object",
+            "required": [
+              "endpoint",
+              "type"
+            ],
+            "properties": {
+              "endpoint": {
+                "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
+                "type": "string"
+              },
+              "net": {
+                "default": "local",
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/net_rpc_NetRef"
+                  }
+                ]
+              },
+              "type": {
+                "type": "string",
+                "const": "rpc"
               }
             }
           },
@@ -656,53 +613,17 @@
             }
           },
           {
-            "title": "RemoteProtocolConfig",
+            "title": "RpcServerConfig",
             "type": "object",
-            "oneOf": [
-              {
-                "type": "object",
-                "required": [
-                  "mode",
-                  "remote"
-                ],
-                "properties": {
-                  "mode": {
-                    "type": "string",
-                    "enum": [
-                      "active"
-                    ]
-                  },
-                  "remote": {
-                    "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
-                    "type": "string"
-                  }
-                }
-              },
-              {
-                "type": "object",
-                "required": [
-                  "bind",
-                  "mode"
-                ],
-                "properties": {
-                  "bind": {
-                    "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
-                    "type": "string"
-                  },
-                  "mode": {
-                    "type": "string",
-                    "enum": [
-                      "passive"
-                    ]
-                  }
-                }
-              }
-            ],
             "required": [
-              "token",
+              "bind",
               "type"
             ],
             "properties": {
+              "bind": {
+                "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
+                "type": "string"
+              },
               "listen": {
                 "title": "NetRef",
                 "type": "string"
@@ -711,16 +632,9 @@
                 "title": "NetRef",
                 "type": "string"
               },
-              "token": {
-                "type": "string"
-              },
               "type": {
                 "type": "string",
-                "const": "remote"
-              },
-              "udp_in_tcp": {
-                "default": false,
-                "type": "boolean"
+                "const": "rpc"
               }
             }
           },
@@ -842,10 +756,10 @@
     "net_obfs_NetRef": {
       "type": "string"
     },
-    "net_remote_NetRef": {
+    "net_resolve_NetRef": {
       "type": "string"
     },
-    "net_resolve_NetRef": {
+    "net_rpc_NetRef": {
       "type": "string"
     },
     "net_rule_DomainMatcherMethod": {
