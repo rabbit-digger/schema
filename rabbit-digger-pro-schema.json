@@ -7,464 +7,7 @@
     },
     "net": {
       "additionalProperties": {
-        "type": "object",
-        "anyOf": [
-          {
-            "title": "AliasNetConfig",
-            "description": "A net refering to another net.",
-            "type": "object",
-            "required": [
-              "net",
-              "type"
-            ],
-            "properties": {
-              "net": {
-                "$ref": "#/definitions/net_alias_NetRef"
-              },
-              "type": {
-                "type": "string",
-                "const": "alias"
-              }
-            }
-          },
-          {
-            "title": "CombineNetConfig",
-            "description": "CombineNet merges multiple nets into one.",
-            "type": "object",
-            "required": [
-              "lookup_host",
-              "tcp_bind",
-              "tcp_connect",
-              "type",
-              "udp_bind"
-            ],
-            "properties": {
-              "lookup_host": {
-                "$ref": "#/definitions/net_combine_NetRef"
-              },
-              "tcp_bind": {
-                "$ref": "#/definitions/net_combine_NetRef"
-              },
-              "tcp_connect": {
-                "$ref": "#/definitions/net_combine_NetRef"
-              },
-              "type": {
-                "type": "string",
-                "const": "combine"
-              },
-              "udp_bind": {
-                "$ref": "#/definitions/net_combine_NetRef"
-              }
-            }
-          },
-          {
-            "title": "DNSNetConfig",
-            "type": "object",
-            "required": [
-              "type"
-            ],
-            "properties": {
-              "net": {
-                "default": "local",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/net_dns_sniffer_NetRef"
-                  }
-                ]
-              },
-              "type": {
-                "type": "string",
-                "const": "dns_sniffer"
-              }
-            }
-          },
-          {
-            "title": "HttpNetConfig",
-            "type": "object",
-            "required": [
-              "server",
-              "type"
-            ],
-            "properties": {
-              "net": {
-                "default": "local",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/net_http_NetRef"
-                  }
-                ]
-              },
-              "server": {
-                "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
-                "type": "string"
-              },
-              "type": {
-                "type": "string",
-                "const": "http"
-              }
-            }
-          },
-          {
-            "title": "LocalNetConfig",
-            "description": "A local network.",
-            "type": "object",
-            "required": [
-              "type"
-            ],
-            "properties": {
-              "bind_addr": {
-                "description": "bind to address",
-                "type": [
-                  "string",
-                  "null"
-                ],
-                "format": "ip"
-              },
-              "bind_device": {
-                "description": "bind to device",
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "connect_timeout": {
-                "description": "timeout of TCP connect, in seconds.",
-                "type": [
-                  "integer",
-                  "null"
-                ],
-                "format": "uint64",
-                "minimum": 0.0
-              },
-              "mark": {
-                "description": "set SO_MARK on linux",
-                "type": [
-                  "integer",
-                  "null"
-                ],
-                "format": "uint32",
-                "minimum": 0.0
-              },
-              "nodelay": {
-                "description": "set nodelay. default is true",
-                "default": null,
-                "type": [
-                  "boolean",
-                  "null"
-                ]
-              },
-              "ttl": {
-                "description": "set ttl",
-                "default": null,
-                "type": [
-                  "integer",
-                  "null"
-                ],
-                "format": "uint32",
-                "minimum": 0.0
-              },
-              "type": {
-                "type": "string",
-                "const": "local"
-              }
-            }
-          },
-          {
-            "title": "EmptyConfig",
-            "type": "null",
-            "required": [
-              "type"
-            ],
-            "properties": {
-              "type": {
-                "type": "string",
-                "const": "noop"
-              }
-            }
-          },
-          {
-            "title": "ObfsNetConfig",
-            "type": "object",
-            "oneOf": [
-              {
-                "type": "object",
-                "required": [
-                  "obfs_param",
-                  "obfs_type"
-                ],
-                "properties": {
-                  "obfs_param": {
-                    "type": "string"
-                  },
-                  "obfs_type": {
-                    "type": "string",
-                    "enum": [
-                      "http_simple"
-                    ]
-                  }
-                }
-              },
-              {
-                "type": "object",
-                "required": [
-                  "obfs_type"
-                ],
-                "properties": {
-                  "obfs_type": {
-                    "type": "string",
-                    "enum": [
-                      "plain"
-                    ]
-                  }
-                }
-              }
-            ],
-            "required": [
-              "type"
-            ],
-            "properties": {
-              "net": {
-                "default": "local",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/net_obfs_NetRef"
-                  }
-                ]
-              },
-              "type": {
-                "type": "string",
-                "const": "obfs"
-              }
-            }
-          },
-          {
-            "title": "ResolveConfig",
-            "type": "object",
-            "required": [
-              "net",
-              "resolve_net",
-              "type"
-            ],
-            "properties": {
-              "ipv4": {
-                "default": true,
-                "type": "boolean"
-              },
-              "ipv6": {
-                "default": true,
-                "type": "boolean"
-              },
-              "net": {
-                "$ref": "#/definitions/net_resolve_NetRef"
-              },
-              "resolve_net": {
-                "$ref": "#/definitions/net_resolve_NetRef"
-              },
-              "type": {
-                "type": "string",
-                "const": "resolve"
-              }
-            }
-          },
-          {
-            "title": "RpcNetConfig",
-            "type": "object",
-            "required": [
-              "endpoint",
-              "type"
-            ],
-            "properties": {
-              "endpoint": {
-                "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
-                "type": "string"
-              },
-              "net": {
-                "default": "local",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/net_rpc_NetRef"
-                  }
-                ]
-              },
-              "type": {
-                "type": "string",
-                "const": "rpc"
-              }
-            }
-          },
-          {
-            "title": "RuleNetConfig",
-            "type": "object",
-            "required": [
-              "rule",
-              "type"
-            ],
-            "properties": {
-              "lru_cache_size": {
-                "default": 32,
-                "type": "integer",
-                "format": "uint",
-                "minimum": 0.0
-              },
-              "rule": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/net_rule_RuleItem"
-                }
-              },
-              "type": {
-                "type": "string",
-                "const": "rule"
-              }
-            }
-          },
-          {
-            "title": "SelectNetConfig",
-            "type": "object",
-            "required": [
-              "list",
-              "selected",
-              "type"
-            ],
-            "properties": {
-              "list": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/net_select_NetRef"
-                }
-              },
-              "selected": {
-                "$ref": "#/definitions/net_select_NetRef"
-              },
-              "type": {
-                "type": "string",
-                "const": "select"
-              }
-            }
-          },
-          {
-            "title": "SSNetConfig",
-            "type": "object",
-            "required": [
-              "cipher",
-              "password",
-              "server",
-              "type"
-            ],
-            "properties": {
-              "cipher": {
-                "$ref": "#/definitions/net_shadowsocks_Cipher"
-              },
-              "net": {
-                "default": "local",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/net_shadowsocks_NetRef"
-                  }
-                ]
-              },
-              "password": {
-                "type": "string"
-              },
-              "server": {
-                "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
-                "type": "string"
-              },
-              "type": {
-                "type": "string",
-                "const": "shadowsocks"
-              },
-              "udp": {
-                "default": false,
-                "type": "boolean"
-              }
-            }
-          },
-          {
-            "title": "Socks5NetConfig",
-            "type": "object",
-            "required": [
-              "server",
-              "type"
-            ],
-            "properties": {
-              "net": {
-                "default": "local",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/net_socks5_NetRef"
-                  }
-                ]
-              },
-              "server": {
-                "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
-                "type": "string"
-              },
-              "type": {
-                "type": "string",
-                "const": "socks5"
-              }
-            }
-          },
-          {
-            "title": "TrojanNetConfig",
-            "type": "object",
-            "required": [
-              "password",
-              "server",
-              "sni",
-              "type"
-            ],
-            "properties": {
-              "net": {
-                "default": "local",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/net_trojan_NetRef"
-                  }
-                ]
-              },
-              "password": {
-                "description": "password in plain text",
-                "type": "string"
-              },
-              "server": {
-                "description": "hostname:port",
-                "type": "string"
-              },
-              "skip_cert_verify": {
-                "description": "skip certificate verify",
-                "default": false,
-                "type": "boolean"
-              },
-              "sni": {
-                "description": "sni",
-                "type": "string"
-              },
-              "type": {
-                "type": "string",
-                "const": "trojan"
-              },
-              "udp": {
-                "description": "enable udp or not",
-                "default": false,
-                "type": "boolean"
-              },
-              "websocket": {
-                "description": "enabled websocket support",
-                "default": null,
-                "anyOf": [
-                  {
-                    "$ref": "#/definitions/net_trojan_WebSocket"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
-              }
-            }
-          }
-        ]
+        "$ref": "#/definitions/Net"
       }
     },
     "server": {
@@ -485,12 +28,15 @@
                 "type": "string"
               },
               "listen": {
-                "title": "NetRef",
-                "type": "string"
-              },
-              "net": {
-                "title": "NetRef",
-                "type": "string"
+                "default": "local",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/definitions/Net"
+                  }
+                ]
               },
               "type": {
                 "type": "string",
@@ -513,12 +59,26 @@
                 "type": "string"
               },
               "listen": {
-                "title": "NetRef",
-                "type": "string"
+                "default": "local",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/definitions/Net"
+                  }
+                ]
               },
               "net": {
-                "title": "NetRef",
-                "type": "string"
+                "default": "local",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/definitions/Net"
+                  }
+                ]
               },
               "target": {
                 "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
@@ -547,12 +107,26 @@
                 "type": "string"
               },
               "listen": {
-                "title": "NetRef",
-                "type": "string"
+                "default": "local",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/definitions/Net"
+                  }
+                ]
               },
               "net": {
-                "title": "NetRef",
-                "type": "string"
+                "default": "local",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/definitions/Net"
+                  }
+                ]
               },
               "type": {
                 "type": "string",
@@ -573,12 +147,26 @@
                 "type": "string"
               },
               "listen": {
-                "title": "NetRef",
-                "type": "string"
+                "default": "local",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/definitions/Net"
+                  }
+                ]
               },
               "net": {
-                "title": "NetRef",
-                "type": "string"
+                "default": "local",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/definitions/Net"
+                  }
+                ]
               },
               "type": {
                 "type": "string",
@@ -598,13 +186,16 @@
                 "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
                 "type": "string"
               },
-              "listen": {
-                "title": "NetRef",
-                "type": "string"
-              },
               "net": {
-                "title": "NetRef",
-                "type": "string"
+                "default": "local",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/definitions/Net"
+                  }
+                ]
               },
               "type": {
                 "type": "string",
@@ -625,12 +216,26 @@
                 "type": "string"
               },
               "listen": {
-                "title": "NetRef",
-                "type": "string"
+                "default": "local",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/definitions/Net"
+                  }
+                ]
               },
               "net": {
-                "title": "NetRef",
-                "type": "string"
+                "default": "local",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/definitions/Net"
+                  }
+                ]
               },
               "type": {
                 "type": "string",
@@ -656,12 +261,26 @@
                 "$ref": "#/definitions/server_shadowsocks_Cipher"
               },
               "listen": {
-                "title": "NetRef",
-                "type": "string"
+                "default": "local",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/definitions/Net"
+                  }
+                ]
               },
               "net": {
-                "title": "NetRef",
-                "type": "string"
+                "default": "local",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/definitions/Net"
+                  }
+                ]
               },
               "password": {
                 "type": "string"
@@ -689,12 +308,26 @@
                 "type": "string"
               },
               "listen": {
-                "title": "NetRef",
-                "type": "string"
+                "default": "local",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/definitions/Net"
+                  }
+                ]
               },
               "net": {
-                "title": "NetRef",
-                "type": "string"
+                "default": "local",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/definitions/Net"
+                  }
+                ]
               },
               "type": {
                 "type": "string",
@@ -714,10 +347,6 @@
                 "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
                 "type": "string"
               },
-              "listen": {
-                "title": "NetRef",
-                "type": "string"
-              },
               "mark": {
                 "type": [
                   "integer",
@@ -727,8 +356,15 @@
                 "minimum": 0.0
               },
               "net": {
-                "title": "NetRef",
-                "type": "string"
+                "default": "local",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/definitions/Net"
+                  }
+                ]
               },
               "type": {
                 "type": "string",
@@ -741,26 +377,549 @@
     }
   },
   "definitions": {
-    "net_alias_NetRef": {
-      "type": "string"
-    },
-    "net_combine_NetRef": {
-      "type": "string"
-    },
-    "net_dns_sniffer_NetRef": {
-      "type": "string"
-    },
-    "net_http_NetRef": {
-      "type": "string"
-    },
-    "net_obfs_NetRef": {
-      "type": "string"
-    },
-    "net_resolve_NetRef": {
-      "type": "string"
-    },
-    "net_rpc_NetRef": {
-      "type": "string"
+    "Net": {
+      "type": "object",
+      "anyOf": [
+        {
+          "title": "AliasNetConfig",
+          "description": "A net refering to another net.",
+          "type": "object",
+          "required": [
+            "net",
+            "type"
+          ],
+          "properties": {
+            "net": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "type": {
+              "type": "string",
+              "const": "alias"
+            }
+          }
+        },
+        {
+          "title": "CombineNetConfig",
+          "description": "CombineNet merges multiple nets into one.",
+          "type": "object",
+          "required": [
+            "lookup_host",
+            "tcp_bind",
+            "tcp_connect",
+            "type",
+            "udp_bind"
+          ],
+          "properties": {
+            "lookup_host": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "tcp_bind": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "tcp_connect": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "type": {
+              "type": "string",
+              "const": "combine"
+            },
+            "udp_bind": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "title": "DNSNetConfig",
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "net": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "type": {
+              "type": "string",
+              "const": "dns_sniffer"
+            }
+          }
+        },
+        {
+          "title": "HttpNetConfig",
+          "type": "object",
+          "required": [
+            "server",
+            "type"
+          ],
+          "properties": {
+            "net": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "server": {
+              "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
+              "type": "string"
+            },
+            "type": {
+              "type": "string",
+              "const": "http"
+            }
+          }
+        },
+        {
+          "title": "LocalNetConfig",
+          "description": "A local network.",
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "bind_addr": {
+              "description": "bind to address",
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "ip"
+            },
+            "bind_device": {
+              "description": "bind to device",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "connect_timeout": {
+              "description": "timeout of TCP connect, in seconds.",
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "uint64",
+              "minimum": 0.0
+            },
+            "mark": {
+              "description": "set SO_MARK on linux",
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "uint32",
+              "minimum": 0.0
+            },
+            "nodelay": {
+              "description": "set nodelay. default is true",
+              "default": null,
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "ttl": {
+              "description": "set ttl",
+              "default": null,
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "uint32",
+              "minimum": 0.0
+            },
+            "type": {
+              "type": "string",
+              "const": "local"
+            }
+          }
+        },
+        {
+          "title": "EmptyConfig",
+          "type": "null",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "noop"
+            }
+          }
+        },
+        {
+          "title": "ObfsNetConfig",
+          "type": "object",
+          "oneOf": [
+            {
+              "type": "object",
+              "required": [
+                "obfs_param",
+                "obfs_type"
+              ],
+              "properties": {
+                "obfs_param": {
+                  "type": "string"
+                },
+                "obfs_type": {
+                  "type": "string",
+                  "enum": [
+                    "http_simple"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "obfs_type"
+              ],
+              "properties": {
+                "obfs_type": {
+                  "type": "string",
+                  "enum": [
+                    "plain"
+                  ]
+                }
+              }
+            }
+          ],
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "net": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "type": {
+              "type": "string",
+              "const": "obfs"
+            }
+          }
+        },
+        {
+          "title": "ResolveConfig",
+          "type": "object",
+          "required": [
+            "net",
+            "resolve_net",
+            "type"
+          ],
+          "properties": {
+            "ipv4": {
+              "default": true,
+              "type": "boolean"
+            },
+            "ipv6": {
+              "default": true,
+              "type": "boolean"
+            },
+            "net": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "resolve_net": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "type": {
+              "type": "string",
+              "const": "resolve"
+            }
+          }
+        },
+        {
+          "title": "RpcNetConfig",
+          "type": "object",
+          "required": [
+            "endpoint",
+            "type"
+          ],
+          "properties": {
+            "endpoint": {
+              "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
+              "type": "string"
+            },
+            "net": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "type": {
+              "type": "string",
+              "const": "rpc"
+            }
+          }
+        },
+        {
+          "title": "RuleNetConfig",
+          "type": "object",
+          "required": [
+            "rule",
+            "type"
+          ],
+          "properties": {
+            "lru_cache_size": {
+              "default": 32,
+              "type": "integer",
+              "format": "uint",
+              "minimum": 0.0
+            },
+            "rule": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/net_rule_RuleItem"
+              }
+            },
+            "type": {
+              "type": "string",
+              "const": "rule"
+            }
+          }
+        },
+        {
+          "title": "SelectNetConfig",
+          "type": "object",
+          "required": [
+            "list",
+            "selected",
+            "type"
+          ],
+          "properties": {
+            "list": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/definitions/Net"
+                  }
+                ]
+              }
+            },
+            "selected": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "type": {
+              "type": "string",
+              "const": "select"
+            }
+          }
+        },
+        {
+          "title": "SSNetConfig",
+          "type": "object",
+          "required": [
+            "cipher",
+            "password",
+            "server",
+            "type"
+          ],
+          "properties": {
+            "cipher": {
+              "$ref": "#/definitions/net_shadowsocks_Cipher"
+            },
+            "net": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "password": {
+              "type": "string"
+            },
+            "server": {
+              "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
+              "type": "string"
+            },
+            "type": {
+              "type": "string",
+              "const": "shadowsocks"
+            },
+            "udp": {
+              "default": false,
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "title": "Socks5NetConfig",
+          "type": "object",
+          "required": [
+            "server",
+            "type"
+          ],
+          "properties": {
+            "net": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "server": {
+              "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
+              "type": "string"
+            },
+            "type": {
+              "type": "string",
+              "const": "socks5"
+            }
+          }
+        },
+        {
+          "title": "TrojanNetConfig",
+          "type": "object",
+          "required": [
+            "password",
+            "server",
+            "sni",
+            "type"
+          ],
+          "properties": {
+            "net": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "password": {
+              "description": "password in plain text",
+              "type": "string"
+            },
+            "server": {
+              "description": "hostname:port",
+              "type": "string"
+            },
+            "skip_cert_verify": {
+              "description": "skip certificate verify",
+              "default": false,
+              "type": "boolean"
+            },
+            "sni": {
+              "description": "sni",
+              "type": "string"
+            },
+            "type": {
+              "type": "string",
+              "const": "trojan"
+            },
+            "udp": {
+              "description": "enable udp or not",
+              "default": false,
+              "type": "boolean"
+            },
+            "websocket": {
+              "description": "enabled websocket support",
+              "default": null,
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/net_trojan_WebSocket"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        }
+      ]
     },
     "net_rule_DomainMatcherMethod": {
       "type": "string",
@@ -771,9 +930,6 @@
       ]
     },
     "net_rule_IpCidr": {
-      "type": "string"
-    },
-    "net_rule_NetRef": {
       "type": "string"
     },
     "net_rule_RuleItem": {
@@ -857,12 +1013,16 @@
       ],
       "properties": {
         "target": {
-          "$ref": "#/definitions/net_rule_NetRef"
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/definitions/Net"
+            }
+          ]
         }
       }
-    },
-    "net_select_NetRef": {
-      "type": "string"
     },
     "net_shadowsocks_Cipher": {
       "type": "string",
@@ -913,15 +1073,6 @@
         "sm4-gcm",
         "sm4-ccm"
       ]
-    },
-    "net_shadowsocks_NetRef": {
-      "type": "string"
-    },
-    "net_socks5_NetRef": {
-      "type": "string"
-    },
-    "net_trojan_NetRef": {
-      "type": "string"
     },
     "net_trojan_WebSocket": {
       "type": "object",
