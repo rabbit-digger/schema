@@ -406,6 +406,19 @@
           }
         },
         {
+          "title": "EmptyConfig",
+          "type": "null",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "blackhole"
+            }
+          }
+        },
+        {
           "title": "CombineNetConfig",
           "description": "CombineNet merges multiple nets into one.",
           "type": "object",
