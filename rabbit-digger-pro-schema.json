@@ -5,6 +5,173 @@
     "id": {
       "type": "string"
     },
+    "import": {
+      "items": {
+        "type": "object",
+        "anyOf": [
+          {
+            "title": "Clash",
+            "type": "object",
+            "required": [
+              "source",
+              "type"
+            ],
+            "properties": {
+              "direct": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "disable_proxy_group": {
+                "default": false,
+                "type": "boolean"
+              },
+              "name": {
+                "title": "Nullable_String",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "prefix": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "reject": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "rule_name": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "select": {
+                "description": "Make all proxies in the group name",
+                "default": null,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "source": {
+                "title": "ImportSource",
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "path"
+                    ],
+                    "properties": {
+                      "path": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "poll"
+                    ],
+                    "properties": {
+                      "poll": {
+                        "$ref": "#/definitions/ImportUrl"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "storage"
+                    ],
+                    "properties": {
+                      "storage": {
+                        "$ref": "#/definitions/ImportStorage"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "type": {
+                "type": "string",
+                "const": "clash"
+              }
+            }
+          },
+          {
+            "title": "EmptyConfig",
+            "type": "null",
+            "required": [
+              "source",
+              "type"
+            ],
+            "properties": {
+              "name": {
+                "title": "Nullable_String",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "source": {
+                "title": "ImportSource",
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "path"
+                    ],
+                    "properties": {
+                      "path": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "poll"
+                    ],
+                    "properties": {
+                      "poll": {
+                        "$ref": "#/definitions/ImportUrl"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "storage"
+                    ],
+                    "properties": {
+                      "storage": {
+                        "$ref": "#/definitions/ImportStorage"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "type": {
+                "type": "string",
+                "const": "merge"
+              }
+            }
+          }
+        ]
+      }
+    },
     "net": {
       "additionalProperties": {
         "$ref": "#/definitions/Net"
@@ -12,371 +179,45 @@
     },
     "server": {
       "additionalProperties": {
-        "type": "object",
-        "anyOf": [
-          {
-            "title": "EchoServerConfig",
-            "description": "A echo server.",
-            "type": "object",
-            "required": [
-              "bind",
-              "type"
-            ],
-            "properties": {
-              "bind": {
-                "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
-                "type": "string"
-              },
-              "listen": {
-                "default": "local",
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "$ref": "#/definitions/Net"
-                  }
-                ]
-              },
-              "type": {
-                "type": "string",
-                "const": "echo"
-              }
-            }
-          },
-          {
-            "title": "ForwardServerConfig",
-            "description": "A server that forwards all connections to target.",
-            "type": "object",
-            "required": [
-              "bind",
-              "target",
-              "type"
-            ],
-            "properties": {
-              "bind": {
-                "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
-                "type": "string"
-              },
-              "listen": {
-                "default": "local",
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "$ref": "#/definitions/Net"
-                  }
-                ]
-              },
-              "net": {
-                "default": "local",
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "$ref": "#/definitions/Net"
-                  }
-                ]
-              },
-              "target": {
-                "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
-                "type": "string"
-              },
-              "type": {
-                "type": "string",
-                "const": "forward"
-              },
-              "udp": {
-                "default": false,
-                "type": "boolean"
-              }
-            }
-          },
-          {
-            "title": "HttpServerConfig",
-            "type": "object",
-            "required": [
-              "bind",
-              "type"
-            ],
-            "properties": {
-              "bind": {
-                "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
-                "type": "string"
-              },
-              "listen": {
-                "default": "local",
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "$ref": "#/definitions/Net"
-                  }
-                ]
-              },
-              "net": {
-                "default": "local",
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "$ref": "#/definitions/Net"
-                  }
-                ]
-              },
-              "type": {
-                "type": "string",
-                "const": "http"
-              }
-            }
-          },
-          {
-            "title": "MixedServerConfig",
-            "type": "object",
-            "required": [
-              "bind",
-              "type"
-            ],
-            "properties": {
-              "bind": {
-                "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
-                "type": "string"
-              },
-              "listen": {
-                "default": "local",
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "$ref": "#/definitions/Net"
-                  }
-                ]
-              },
-              "net": {
-                "default": "local",
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "$ref": "#/definitions/Net"
-                  }
-                ]
-              },
-              "type": {
-                "type": "string",
-                "const": "http+socks5"
-              }
-            }
-          },
-          {
-            "title": "RedirServerConfig",
-            "type": "object",
-            "required": [
-              "bind",
-              "type"
-            ],
-            "properties": {
-              "bind": {
-                "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
-                "type": "string"
-              },
-              "net": {
-                "default": "local",
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "$ref": "#/definitions/Net"
-                  }
-                ]
-              },
-              "type": {
-                "type": "string",
-                "const": "redir"
-              }
-            }
-          },
-          {
-            "title": "RpcServerConfig",
-            "type": "object",
-            "required": [
-              "bind",
-              "type"
-            ],
-            "properties": {
-              "bind": {
-                "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
-                "type": "string"
-              },
-              "listen": {
-                "default": "local",
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "$ref": "#/definitions/Net"
-                  }
-                ]
-              },
-              "net": {
-                "default": "local",
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "$ref": "#/definitions/Net"
-                  }
-                ]
-              },
-              "type": {
-                "type": "string",
-                "const": "rpc"
-              }
-            }
-          },
-          {
-            "title": "SSServerConfig",
-            "type": "object",
-            "required": [
-              "bind",
-              "cipher",
-              "password",
-              "type"
-            ],
-            "properties": {
-              "bind": {
-                "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
-                "type": "string"
-              },
-              "cipher": {
-                "$ref": "#/definitions/server_shadowsocks_Cipher"
-              },
-              "listen": {
-                "default": "local",
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "$ref": "#/definitions/Net"
-                  }
-                ]
-              },
-              "net": {
-                "default": "local",
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "$ref": "#/definitions/Net"
-                  }
-                ]
-              },
-              "password": {
-                "type": "string"
-              },
-              "type": {
-                "type": "string",
-                "const": "shadowsocks"
-              },
-              "udp": {
-                "default": false,
-                "type": "boolean"
-              }
-            }
-          },
-          {
-            "title": "Socks5ServerConfig",
-            "type": "object",
-            "required": [
-              "bind",
-              "type"
-            ],
-            "properties": {
-              "bind": {
-                "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
-                "type": "string"
-              },
-              "listen": {
-                "default": "local",
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "$ref": "#/definitions/Net"
-                  }
-                ]
-              },
-              "net": {
-                "default": "local",
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "$ref": "#/definitions/Net"
-                  }
-                ]
-              },
-              "type": {
-                "type": "string",
-                "const": "socks5"
-              }
-            }
-          },
-          {
-            "title": "TProxyServerConfig",
-            "type": "object",
-            "required": [
-              "bind",
-              "type"
-            ],
-            "properties": {
-              "bind": {
-                "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
-                "type": "string"
-              },
-              "mark": {
-                "type": [
-                  "integer",
-                  "null"
-                ],
-                "format": "uint32",
-                "minimum": 0.0
-              },
-              "net": {
-                "default": "local",
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "$ref": "#/definitions/Net"
-                  }
-                ]
-              },
-              "type": {
-                "type": "string",
-                "const": "tproxy"
-              }
-            }
-          }
-        ]
+        "$ref": "#/definitions/Server"
       }
     }
   },
   "definitions": {
+    "ImportStorage": {
+      "type": "object",
+      "required": [
+        "folder",
+        "key"
+      ],
+      "properties": {
+        "folder": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
+        }
+      }
+    },
+    "ImportUrl": {
+      "type": "object",
+      "required": [
+        "url"
+      ],
+      "properties": {
+        "interval": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "minimum": 0.0
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
     "Net": {
       "type": "object",
       "anyOf": [
@@ -932,6 +773,369 @@
                   "type": "null"
                 }
               ]
+            }
+          }
+        }
+      ]
+    },
+    "Server": {
+      "type": "object",
+      "anyOf": [
+        {
+          "title": "EchoServerConfig",
+          "description": "A echo server.",
+          "type": "object",
+          "required": [
+            "bind",
+            "type"
+          ],
+          "properties": {
+            "bind": {
+              "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
+              "type": "string"
+            },
+            "listen": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "type": {
+              "type": "string",
+              "const": "echo"
+            }
+          }
+        },
+        {
+          "title": "ForwardServerConfig",
+          "description": "A server that forwards all connections to target.",
+          "type": "object",
+          "required": [
+            "bind",
+            "target",
+            "type"
+          ],
+          "properties": {
+            "bind": {
+              "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
+              "type": "string"
+            },
+            "listen": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "net": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "target": {
+              "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
+              "type": "string"
+            },
+            "type": {
+              "type": "string",
+              "const": "forward"
+            },
+            "udp": {
+              "default": false,
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "title": "HttpServerConfig",
+          "type": "object",
+          "required": [
+            "bind",
+            "type"
+          ],
+          "properties": {
+            "bind": {
+              "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
+              "type": "string"
+            },
+            "listen": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "net": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "type": {
+              "type": "string",
+              "const": "http"
+            }
+          }
+        },
+        {
+          "title": "MixedServerConfig",
+          "type": "object",
+          "required": [
+            "bind",
+            "type"
+          ],
+          "properties": {
+            "bind": {
+              "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
+              "type": "string"
+            },
+            "listen": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "net": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "type": {
+              "type": "string",
+              "const": "http+socks5"
+            }
+          }
+        },
+        {
+          "title": "RedirServerConfig",
+          "type": "object",
+          "required": [
+            "bind",
+            "type"
+          ],
+          "properties": {
+            "bind": {
+              "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
+              "type": "string"
+            },
+            "net": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "type": {
+              "type": "string",
+              "const": "redir"
+            }
+          }
+        },
+        {
+          "title": "RpcServerConfig",
+          "type": "object",
+          "required": [
+            "bind",
+            "type"
+          ],
+          "properties": {
+            "bind": {
+              "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
+              "type": "string"
+            },
+            "listen": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "net": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "type": {
+              "type": "string",
+              "const": "rpc"
+            }
+          }
+        },
+        {
+          "title": "SSServerConfig",
+          "type": "object",
+          "required": [
+            "bind",
+            "cipher",
+            "password",
+            "type"
+          ],
+          "properties": {
+            "bind": {
+              "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
+              "type": "string"
+            },
+            "cipher": {
+              "$ref": "#/definitions/server_shadowsocks_Cipher"
+            },
+            "listen": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "net": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "password": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string",
+              "const": "shadowsocks"
+            },
+            "udp": {
+              "default": false,
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "title": "Socks5ServerConfig",
+          "type": "object",
+          "required": [
+            "bind",
+            "type"
+          ],
+          "properties": {
+            "bind": {
+              "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
+              "type": "string"
+            },
+            "listen": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "net": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "type": {
+              "type": "string",
+              "const": "socks5"
+            }
+          }
+        },
+        {
+          "title": "TProxyServerConfig",
+          "type": "object",
+          "required": [
+            "bind",
+            "type"
+          ],
+          "properties": {
+            "bind": {
+              "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
+              "type": "string"
+            },
+            "mark": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "uint32",
+              "minimum": 0.0
+            },
+            "net": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "type": {
+              "type": "string",
+              "const": "tproxy"
             }
           }
         }
