@@ -877,7 +877,6 @@
           "required": [
             "password",
             "server",
-            "sni",
             "type"
           ],
           "properties": {
@@ -907,7 +906,11 @@
             },
             "sni": {
               "description": "sni",
-              "type": "string"
+              "default": null,
+              "type": [
+                "string",
+                "null"
+              ]
             },
             "type": {
               "type": "string",
@@ -984,6 +987,24 @@
               "type": "string",
               "enum": [
                 "ipcidr"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "ipcidr",
+            "type"
+          ],
+          "properties": {
+            "ipcidr": {
+              "$ref": "#/definitions/net_rule_IpCidr"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "srcipcidr"
               ]
             }
           }
