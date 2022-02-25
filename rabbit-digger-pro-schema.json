@@ -1164,7 +1164,10 @@
           ],
           "properties": {
             "domain": {
-              "type": "string"
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             },
             "method": {
               "$ref": "#/definitions/net_rule_DomainMatcherMethod"
@@ -1185,7 +1188,10 @@
           ],
           "properties": {
             "ipcidr": {
-              "$ref": "#/definitions/net_rule_IpCidr"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/net_rule_IpCidr"
+              }
             },
             "type": {
               "type": "string",
@@ -1203,12 +1209,15 @@
           ],
           "properties": {
             "ipcidr": {
-              "$ref": "#/definitions/net_rule_IpCidr"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/net_rule_IpCidr"
+              }
             },
             "type": {
               "type": "string",
               "enum": [
-                "srcipcidr"
+                "src_ipcidr"
               ]
             }
           }
