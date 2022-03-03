@@ -419,6 +419,15 @@
                 "null"
               ]
             },
+            "tcp_keepalive": {
+              "description": "enable keepalive on TCP socket, in seconds. default is 600s.",
+              "default": null,
+              "type": [
+                "number",
+                "null"
+              ],
+              "format": "double"
+            },
             "ttl": {
               "description": "set ttl",
               "default": null,
@@ -1164,10 +1173,7 @@
           ],
           "properties": {
             "domain": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
+              "$ref": "#/definitions/net_rule_SingleOrVec_for_String"
             },
             "method": {
               "$ref": "#/definitions/net_rule_DomainMatcherMethod"
@@ -1188,10 +1194,7 @@
           ],
           "properties": {
             "ipcidr": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/net_rule_IpCidr"
-              }
+              "$ref": "#/definitions/net_rule_SingleOrVec_for_IpCidr"
             },
             "type": {
               "type": "string",
@@ -1209,10 +1212,7 @@
           ],
           "properties": {
             "ipcidr": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/net_rule_IpCidr"
-              }
+              "$ref": "#/definitions/net_rule_SingleOrVec_for_IpCidr"
             },
             "type": {
               "type": "string",
@@ -1270,6 +1270,32 @@
           ]
         }
       }
+    },
+    "net_rule_SingleOrVec_for_IpCidr": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/net_rule_IpCidr"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/net_rule_IpCidr"
+          }
+        }
+      ]
+    },
+    "net_rule_SingleOrVec_for_String": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "net_shadowsocks_Cipher": {
       "type": "string",
