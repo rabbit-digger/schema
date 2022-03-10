@@ -419,8 +419,26 @@
                 "null"
               ]
             },
+            "recv_buffer_size": {
+              "description": "change the system receive buffer size of the socket. by default it remains unchanged.",
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "uint",
+              "minimum": 0.0
+            },
+            "send_buffer_size": {
+              "description": "change the system send buffer size of the socket. by default it remains unchanged.",
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "uint",
+              "minimum": 0.0
+            },
             "tcp_keepalive": {
-              "description": "enable keepalive on TCP socket, in seconds. default is 600s.",
+              "description": "enable keepalive on TCP socket, in seconds. default is 600s. 0 means disable.",
               "default": null,
               "type": [
                 "number",
