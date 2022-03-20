@@ -98,6 +98,18 @@
                       }
                     },
                     "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "text"
+                    ],
+                    "properties": {
+                      "text": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false
                   }
                 ]
               },
@@ -109,7 +121,7 @@
           },
           {
             "title": "EmptyConfig",
-            "type": "null",
+            "type": "object",
             "required": [
               "source",
               "type"
@@ -160,12 +172,98 @@
                       }
                     },
                     "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "text"
+                    ],
+                    "properties": {
+                      "text": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false
                   }
                 ]
               },
               "type": {
                 "type": "string",
                 "const": "merge"
+              }
+            }
+          },
+          {
+            "title": "Rhai",
+            "type": "object",
+            "required": [
+              "source",
+              "type"
+            ],
+            "properties": {
+              "name": {
+                "title": "Nullable_String",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "source": {
+                "title": "ImportSource",
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "path"
+                    ],
+                    "properties": {
+                      "path": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "poll"
+                    ],
+                    "properties": {
+                      "poll": {
+                        "$ref": "#/definitions/ImportUrl"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "storage"
+                    ],
+                    "properties": {
+                      "storage": {
+                        "$ref": "#/definitions/ImportStorage"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "text"
+                    ],
+                    "properties": {
+                      "text": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "type": {
+                "type": "string",
+                "const": "rhai"
               }
             }
           }
@@ -248,7 +346,7 @@
         },
         {
           "title": "EmptyConfig",
-          "type": "null",
+          "type": "object",
           "required": [
             "type"
           ],
@@ -464,7 +562,7 @@
         },
         {
           "title": "EmptyConfig",
-          "type": "null",
+          "type": "object",
           "required": [
             "type"
           ],
@@ -783,11 +881,6 @@
             "type": {
               "type": "string",
               "const": "trojan"
-            },
-            "udp": {
-              "description": "enable udp or not",
-              "default": false,
-              "type": "boolean"
             },
             "websocket": {
               "description": "enabled websocket support",
@@ -1191,7 +1284,7 @@
           ],
           "properties": {
             "domain": {
-              "$ref": "#/definitions/net_rule_SingleOrVec_for_String"
+              "$ref": "#/definitions/net_rule_StringList"
             },
             "method": {
               "$ref": "#/definitions/net_rule_DomainMatcherMethod"
@@ -1314,6 +1407,9 @@
           }
         }
       ]
+    },
+    "net_rule_StringList": {
+      "$ref": "#/definitions/net_rule_SingleOrVec_for_String"
     },
     "net_shadowsocks_Cipher": {
       "type": "string",
