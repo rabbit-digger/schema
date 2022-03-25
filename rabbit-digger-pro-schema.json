@@ -416,6 +416,41 @@
           }
         },
         {
+          "title": "DnsConfig",
+          "type": "object",
+          "required": [
+            "server",
+            "type"
+          ],
+          "properties": {
+            "net": {
+              "default": null,
+              "anyOf": [
+                {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "$ref": "#/definitions/Net"
+                    }
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "server": {
+              "$ref": "#/definitions/net_dns_DnsServer"
+            },
+            "type": {
+              "type": "string",
+              "const": "dns"
+            }
+          }
+        },
+        {
           "title": "DNSNetConfig",
           "type": "object",
           "required": [
@@ -499,6 +534,25 @@
               ],
               "format": "uint64",
               "minimum": 0.0
+            },
+            "lookup_host": {
+              "description": "Change the default system DNS resolver to custom one.",
+              "default": null,
+              "anyOf": [
+                {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "$ref": "#/definitions/Net"
+                    }
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "mark": {
               "description": "set SO_MARK on linux",
@@ -1258,6 +1312,41 @@
               "const": "tproxy"
             }
           }
+        }
+      ]
+    },
+    "net_dns_DnsServer": {
+      "description": "A net refering to another net.",
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "google",
+            "cloudflare"
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "custom"
+          ],
+          "properties": {
+            "custom": {
+              "type": "object",
+              "required": [
+                "nameserver"
+              ],
+              "properties": {
+                "nameserver": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "additionalProperties": false
         }
       ]
     },
