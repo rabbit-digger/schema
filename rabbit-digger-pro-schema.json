@@ -732,13 +732,17 @@
           "title": "RpcNetConfig",
           "type": "object",
           "required": [
-            "endpoint",
+            "server",
             "type"
           ],
           "properties": {
-            "endpoint": {
-              "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
-              "type": "string"
+            "codec": {
+              "default": "Cbor",
+              "allOf": [
+                {
+                  "$ref": "#/definitions/net_rpc_Codec"
+                }
+              ]
             },
             "net": {
               "default": "local",
@@ -750,6 +754,10 @@
                   "$ref": "#/definitions/Net"
                 }
               ]
+            },
+            "server": {
+              "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
+              "type": "string"
             },
             "type": {
               "type": "string",
@@ -1156,6 +1164,14 @@
               "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
               "type": "string"
             },
+            "codec": {
+              "default": "Cbor",
+              "allOf": [
+                {
+                  "$ref": "#/definitions/server_rpc_Codec"
+                }
+              ]
+            },
             "listen": {
               "default": "local",
               "anyOf": [
@@ -1348,6 +1364,13 @@
           },
           "additionalProperties": false
         }
+      ]
+    },
+    "net_rpc_Codec": {
+      "type": "string",
+      "enum": [
+        "Json",
+        "Cbor"
       ]
     },
     "net_rule_DomainMatcherMethod": {
@@ -1564,6 +1587,13 @@
           "type": "string"
         }
       }
+    },
+    "server_rpc_Codec": {
+      "type": "string",
+      "enum": [
+        "Json",
+        "Cbor"
+      ]
     },
     "server_shadowsocks_Cipher": {
       "type": "string",
