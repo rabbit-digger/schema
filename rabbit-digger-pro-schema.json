@@ -908,6 +908,15 @@
             "type"
           ],
           "properties": {
+            "handshake_timeout": {
+              "description": "timeout of TLS handshake, in seconds.",
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "uint64",
+              "minimum": 0.0
+            },
             "net": {
               "default": "local",
               "anyOf": [
