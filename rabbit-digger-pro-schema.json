@@ -900,6 +900,43 @@
           }
         },
         {
+          "title": "TlsNetConfig",
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "net": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "skip_cert_verify": {
+              "description": "Dangerous, but can be used to skip certificate verification.",
+              "default": false,
+              "type": "boolean"
+            },
+            "sni": {
+              "description": "Override domain with SNI",
+              "default": null,
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "type": {
+              "type": "string",
+              "const": "tls"
+            }
+          }
+        },
+        {
           "title": "TrojanNetConfig",
           "type": "object",
           "required": [
