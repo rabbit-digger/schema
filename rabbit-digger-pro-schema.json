@@ -1003,6 +1003,61 @@
               ]
             }
           }
+        },
+        {
+          "title": "TrojancNetConfig",
+          "type": "object",
+          "required": [
+            "password",
+            "server",
+            "type"
+          ],
+          "properties": {
+            "handshake_timeout": {
+              "description": "timeout of TLS handshake, in seconds.",
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "uint64",
+              "minimum": 0.0
+            },
+            "net": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "password": {
+              "description": "password in plain text",
+              "type": "string"
+            },
+            "server": {
+              "description": "hostname:port",
+              "type": "string"
+            },
+            "type": {
+              "type": "string",
+              "const": "trojanc"
+            },
+            "websocket": {
+              "description": "enabled websocket support",
+              "default": null,
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/net_trojanc_WebSocket"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
         }
       ]
     },
@@ -1620,6 +1675,21 @@
       ]
     },
     "net_trojan_WebSocket": {
+      "type": "object",
+      "required": [
+        "host",
+        "path"
+      ],
+      "properties": {
+        "host": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        }
+      }
+    },
+    "net_trojanc_WebSocket": {
       "type": "object",
       "required": [
         "host",
