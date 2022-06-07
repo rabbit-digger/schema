@@ -686,6 +686,50 @@
           }
         },
         {
+          "title": "RawNetConfig",
+          "type": "object",
+          "required": [
+            "device",
+            "ip_addr",
+            "mtu",
+            "type"
+          ],
+          "properties": {
+            "device": {
+              "$ref": "#/definitions/net_raw_MaybeString_for_TunTapConfig"
+            },
+            "ethernet_addr": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "forward": {
+              "default": false,
+              "type": "boolean"
+            },
+            "gateway": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "ip_addr": {
+              "description": "IP Cidr",
+              "type": "string"
+            },
+            "mtu": {
+              "type": "integer",
+              "format": "uint",
+              "minimum": 0.0
+            },
+            "type": {
+              "type": "string",
+              "const": "raw"
+            }
+          }
+        },
+        {
           "title": "ResolveConfig",
           "type": "object",
           "required": [
@@ -1225,6 +1269,42 @@
           }
         },
         {
+          "title": "RawServerConfig",
+          "type": "object",
+          "required": [
+            "listen",
+            "type"
+          ],
+          "properties": {
+            "listen": {
+              "description": "Must be raw net.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "net": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "type": {
+              "type": "string",
+              "const": "raw"
+            }
+          }
+        },
+        {
           "title": "RedirServerConfig",
           "type": "object",
           "required": [
@@ -1466,6 +1546,42 @@
           "additionalProperties": false
         }
       ]
+    },
+    "net_raw_MaybeString_for_TunTapConfig": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/net_raw_TunTapConfig"
+        }
+      ]
+    },
+    "net_raw_TunTap": {
+      "type": "string",
+      "enum": [
+        "tap",
+        "tun"
+      ]
+    },
+    "net_raw_TunTapConfig": {
+      "type": "object",
+      "required": [
+        "host_addr",
+        "type"
+      ],
+      "properties": {
+        "host_addr": {
+          "description": "host address",
+          "type": "string"
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "type": {
+          "$ref": "#/definitions/net_raw_TunTap"
+        }
+      }
     },
     "net_rpc_Codec": {
       "type": "string",
