@@ -634,34 +634,26 @@
             {
               "type": "object",
               "required": [
-                "obfs_param",
-                "obfs_type"
+                "http"
               ],
               "properties": {
-                "obfs_param": {
-                  "type": "string"
-                },
-                "obfs_type": {
-                  "type": "string",
-                  "enum": [
-                    "http_simple"
-                  ]
+                "http": {
+                  "$ref": "#/definitions/net_obfs_HttpSimple"
                 }
-              }
+              },
+              "additionalProperties": false
             },
             {
               "type": "object",
               "required": [
-                "obfs_type"
+                "plain"
               ],
               "properties": {
-                "obfs_type": {
-                  "type": "string",
-                  "enum": [
-                    "plain"
-                  ]
+                "plain": {
+                  "$ref": "#/definitions/net_obfs_Plain"
                 }
-              }
+              },
+              "additionalProperties": false
             }
           ],
           "required": [
@@ -1546,6 +1538,28 @@
           "additionalProperties": false
         }
       ]
+    },
+    "net_obfs_HttpSimple": {
+      "type": "object",
+      "required": [
+        "host"
+      ],
+      "properties": {
+        "host": {
+          "type": "string"
+        },
+        "method": {
+          "default": "GET",
+          "type": "string"
+        },
+        "uri": {
+          "default": "/",
+          "type": "string"
+        }
+      }
+    },
+    "net_obfs_Plain": {
+      "type": "null"
     },
     "net_raw_MaybeString_for_TunTapConfig": {
       "anyOf": [
