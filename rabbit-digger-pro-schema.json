@@ -1170,6 +1170,13 @@
               "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
               "type": "string"
             },
+            "tcp": {
+              "default": null,
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
             "type": {
               "type": "string",
               "const": "forward"
