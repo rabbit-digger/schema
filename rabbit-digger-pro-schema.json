@@ -1166,6 +1166,16 @@
                 }
               ]
             },
+            "resolve_interval": {
+              "description": "The interval to resolve the target address. Used in UDP mode. If not set, the target address will be resolved only once. If set to 0, the target address will be resolved every time. the unit is second.",
+              "default": null,
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "uint64",
+              "minimum": 0.0
+            },
             "target": {
               "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
               "type": "string"
@@ -1184,6 +1194,13 @@
             "udp": {
               "default": false,
               "type": "boolean"
+            },
+            "udp_bind": {
+              "description": "An address contains host and port.\nFor example: example.com:80, 1.1.1.1:53, [::1]:443",
+              "type": [
+                "string",
+                "null"
+              ]
             }
           }
         },
