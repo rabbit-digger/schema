@@ -907,6 +907,48 @@
           }
         },
         {
+          "title": "SNINetConfig",
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "force_sniff": {
+              "description": "Force sniff domain. By default, only sniff connection to IP address. If set to true, will sniff all connection.",
+              "default": false,
+              "type": "boolean"
+            },
+            "net": {
+              "default": "local",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/definitions/Net"
+                }
+              ]
+            },
+            "ports": {
+              "description": "Ports to sniff. If not set, only 443 port will be sniffed.",
+              "default": null,
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": "integer",
+                "format": "uint16",
+                "minimum": 0.0
+              }
+            },
+            "type": {
+              "type": "string",
+              "const": "sni_sniffer"
+            }
+          }
+        },
+        {
           "title": "Socks5NetConfig",
           "type": "object",
           "required": [
